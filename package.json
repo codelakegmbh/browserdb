@@ -19,5 +19,11 @@
   "bugs": {
     "url": "https://github.com/codelakegmbh/local-database/issues"
   },
-  "homepage": "https://github.com/codelakegmbh/local-database#readme"
+  "homepage": "https://github.com/codelakegmbh/local-database#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "jest": "^24.5.0",
+    "nodemon": "^1.18.10",
+    "typescript": "^3.3.4000"
+  }
 }
