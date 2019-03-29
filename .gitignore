@@ -63,3 +63,4 @@ typings/
 *.js
 *.js.map
 !jest.config.js
+!babel.config.js
