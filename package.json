@@ -1,0 +1,23 @@
+{
+  "name": "@codelake/local-database",
+  "version": "0.0.0",
+  "description": "A wrapper around localStorage to enable document like local storing of objects in the browser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codelakegmbh/local-database.git"
+  },
+  "keywords": [
+    "localstorage",
+    "browser"
+  ],
+  "author": "Jörn Neumeyer",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/codelakegmbh/local-database/issues"
+  },
+  "homepage": "https://github.com/codelakegmbh/local-database#readme"
+}
