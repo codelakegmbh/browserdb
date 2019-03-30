@@ -1,3 +1,4 @@
-tests/**/*
+test/**/*
 jest.config.js
-**/*.ts
+babel.config.js
+.idea
