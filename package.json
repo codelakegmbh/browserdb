@@ -2,9 +2,10 @@
   "name": "@codelake/local-database",
   "version": "0.0.0",
   "description": "A wrapper around localStorage to enable document like local storing of objects in the browser.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "repository": {
     "type": "git",
