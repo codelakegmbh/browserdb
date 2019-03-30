@@ -23,6 +23,7 @@
   "homepage": "https://github.com/codelakegmbh/local-database#readme",
   "devDependencies": {
     "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-typescript": "^7.3.3",
     "@types/jest": "^24.0.11",
