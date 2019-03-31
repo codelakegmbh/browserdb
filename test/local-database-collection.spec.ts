@@ -85,7 +85,7 @@ describe('local-database-collection-tests', () => {
       expect(collection.selectItems(() => true)).toEqual([4, 6, 5]);
     });
 
-    test('returns only the eentries which fulfill the predicate', () => {
+    test('returns only the entries which fulfill the predicate', () => {
       collection.insertItem(4);
       collection.insertItem(6);
       collection.insertItem(5);
