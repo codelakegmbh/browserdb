@@ -140,6 +140,14 @@ describe('local-database-collection-tests', () => {
     });
   });
 
+  describe('clear()', () => {
+    test('collection is empty after clearing', () => {
+      collection.clear();
+      expect(collection.selectItems(() => true).length).toBe(0);
+      expect(window.localStorage.getItem(collection.collectionKey())).toBe('[]');
+    });
+  });
+
   describe('constructor', () => {
     test('loads old persisted data after instanciation', () => {
       collection.insertItem(1);
