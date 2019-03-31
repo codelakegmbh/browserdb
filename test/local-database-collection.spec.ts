@@ -1,7 +1,7 @@
 import { BrowserDbCollection, BrowserDb } from "../src";
 
 function initializeLocalStorageMock() {
-  let storage = { };
+  let storage: { [key: string]: string } = { };
 
   spyOn(window.localStorage, 'setItem').and.callFake((key: string, value: string) => {
     storage[key] = value;
@@ -46,13 +46,13 @@ describe('local-database-collection-tests', () => {
   describe('insertItem(item: any)', () => {
     test('creates an array for the collection', () => {
       collection.insertItem(null);
-      const localString = window.localStorage.getItem(collection.collectionKey());
+      const localString = window.localStorage.getItem(collection.collectionKey()) as string;
       expect(JSON.parse(localString)).toBeInstanceOf(Array);
     });
 
     test('local collection contains the inserted item', () => {
       collection.insertItem(4);
-      const localString = window.localStorage.getItem(collection.collectionKey());
+      const localString = window.localStorage.getItem(collection.collectionKey()) as string;
       const parsedArray = JSON.parse(localString);
       expect(parsedArray[0]).toBe(4);
     });
@@ -60,7 +60,7 @@ describe('local-database-collection-tests', () => {
     test('local collection keeps old item on new insertion', () => {
       collection.insertItem(4);
       collection.insertItem(6);
-      const localString = window.localStorage.getItem(collection.collectionKey());
+      const localString = window.localStorage.getItem(collection.collectionKey()) as string;
       const parsedArray = JSON.parse(localString);
       expect(parsedArray[0]).toBe(4);
     });
@@ -114,7 +114,7 @@ describe('local-database-collection-tests', () => {
 
     test('updates the localStorage string', () => {
       collection.insertItem(4);
-      collection.updateItems(x => true, x => x * 2);
+      collection.updateItems(() => true, x => x * 2);
       expect(window.localStorage.getItem(collection.collectionKey())).toBe('[8]')
     });
   });
@@ -122,13 +122,13 @@ describe('local-database-collection-tests', () => {
   describe('deleteItems<T = any>(predicate: (a: T) => boolean): T[]', () => {
     test('removes the items that match the predicate', () => {
       collection.insertItem(1);
-      collection.deleteItems(x => true);
-      expect(collection.selectItems(x => true).length).toBe(0);
+      collection.deleteItems(() => true);
+      expect(collection.selectItems(() => true).length).toBe(0);
     });
 
     test('returns the deleted items', () => {
       collection.insertItem(1);
-      const deletedItems = collection.deleteItems(x => true);
+      const deletedItems = collection.deleteItems(() => true);
       expect(deletedItems).toEqual([1]);
     });
 
