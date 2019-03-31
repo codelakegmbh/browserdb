@@ -1,12 +1,13 @@
 import { LocalDatabase } from ".";
 
 export class LocalDatabaseCollection {
-  private items: any[] = [];
+  private items: any[];
 
   constructor(
     private database: LocalDatabase,
     private name: string,
   ) {
+    this.items = JSON.parse(window.localStorage.getItem(this.collectionKey()) || '[]');
   }
 
   public getName() {
