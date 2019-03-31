@@ -139,4 +139,12 @@ describe('local-database-collection-tests', () => {
       expect(window.localStorage.getItem(collection.collectionKey())).toBe('[2]');
     });
   });
+
+  describe('constructor', () => {
+    test('loads old persisted data after instanciation', () => {
+      collection.insertItem(1);
+      const otherCollection = (new LocalDatabase(collection.getDatabase().getName())).getCollection(collection.getName());
+      expect(collection.selectItems(() => true)).toEqual(otherCollection.selectItems(() => true));
+    })
+  });
 });
