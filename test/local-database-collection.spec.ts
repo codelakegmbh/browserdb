@@ -10,6 +10,8 @@ function initializeLocalStorageMock() {
   spyOn(window.localStorage, 'getItem').and.callFake((key: string) => {
     return storage[key];
   });
+
+  return storage;
 }
 
 describe('local-database-collection-tests', () => {
@@ -38,8 +40,10 @@ describe('local-database-collection-tests', () => {
   });
 
   describe('insertItem()', () => {
+    let storage: { [key: string]: string };
+
     beforeEach(() => {
-      initializeLocalStorageMock();
+      storage = initializeLocalStorageMock();
     });
   });
 });
