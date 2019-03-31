@@ -98,8 +98,14 @@ const updated = collection.updateItems(x => x.id === 2, x => {
 });
 ```
 As the code shows, the `updater` has to return the new/updated item.
-If you only modify the item (in case of a reference type), the `updateItems(predicate, updater)` method will still only use the return value of the updater.
-So if you do not provide a return value, the new/updated item is going to be `undefined`!
+
+If the updater returns `undefined` the updating mechanism will keep the original object with its updated property/properties.
+So you can shorten the update call to
+```typescript
+collection.updateItems(x => x.id === 2, x => { x.name = 'World'; });
+```
+But remember to keep the curly braces around the assignment.
+If you omit them, the returned value of the assignment (in the example the string `'World'`) will become the new/updated item!
 
 ### Clearing a collection
 In case you want to delete all the data contained in a collection you have two options:
