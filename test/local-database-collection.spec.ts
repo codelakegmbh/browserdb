@@ -33,4 +33,13 @@ describe('local-database-collection-tests', () => {
       initializeLocalStorageMock();
     });
   });
+
+  describe('collectionKey()', () => {
+    test('returns the properly prefixed key', () => {
+      const db = new LocalDatabase('test');
+    const collection = db.getCollection('bar');
+
+    expect(collection.collectionKey()).toBe('local-database[test][bar]');
+    });
+  });
 });
