@@ -1,4 +1,4 @@
-import { LocalDatabaseCollection, LocalDatabase } from "../src";
+import { BrowserDbCollection, BrowserDb } from "../src";
 
 function initializeLocalStorageMock() {
   let storage = { };
@@ -14,11 +14,11 @@ function initializeLocalStorageMock() {
   return storage;
 }
 
-let collection: LocalDatabaseCollection;
+let collection: BrowserDbCollection;
 
 beforeEach(() => {
   initializeLocalStorageMock();
-  collection = (new LocalDatabase('test')).getCollection('foo');
+  collection = (new BrowserDb('test')).getCollection('foo');
   collection.clear();
 });
 
@@ -31,8 +31,8 @@ describe('local-database-collection-tests', () => {
 
   describe('getDatabase()', () => {
     test('returns the passed name', () => {
-      const db = new LocalDatabase('moin');
-      const collection = new LocalDatabaseCollection(db, 'foo');
+      const db = new BrowserDb('moin');
+      const collection = new BrowserDbCollection(db, 'foo');
       expect(collection.getDatabase()).toBe(db);
     });
   });
@@ -151,7 +151,7 @@ describe('local-database-collection-tests', () => {
   describe('constructor', () => {
     test('loads old persisted data after instanciation', () => {
       collection.insertItem(1);
-      const otherCollection = (new LocalDatabase(collection.getDatabase().getName())).getCollection(collection.getName());
+      const otherCollection = (new BrowserDb(collection.getDatabase().getName())).getCollection(collection.getName());
       expect(collection.selectItems(() => true)).toEqual(otherCollection.selectItems(() => true));
     })
   });

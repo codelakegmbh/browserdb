@@ -1,17 +1,17 @@
-import {LocalDatabaseManager} from '../src/local-database-manager';
-import {LocalDatabase} from '../src';
+import {BrowserDbManager} from '../src/browser-db-manager';
+import {BrowserDb} from '../src';
 
 describe('local-database-manager-tests', () => {
   describe('getDatabase()', () => {
-    let manager: LocalDatabaseManager;
+    let manager: BrowserDbManager;
 
     beforeAll(() => {
-      manager = new LocalDatabaseManager();
+      manager = new BrowserDbManager();
     });
 
     test('returns a database instance', () => {
       const database = manager.getDatabase('moinsen');
-      expect(database).toBeInstanceOf(LocalDatabase);
+      expect(database).toBeInstanceOf(BrowserDb);
     });
 
     test('passes the provided database name to the database', () => {
@@ -35,13 +35,13 @@ describe('local-database-manager-tests', () => {
 
   describe('getInstance()', () => {
     test('provides a global manager instance', () => {
-      const manager = LocalDatabaseManager.getInstance();
-      expect(manager).toBeInstanceOf(LocalDatabaseManager);
+      const manager = BrowserDbManager.getInstance();
+      expect(manager).toBeInstanceOf(BrowserDbManager);
     });
 
     test('returns the same instance', () => {
-      const manager = LocalDatabaseManager.getInstance();
-      const manager2 = LocalDatabaseManager.getInstance();
+      const manager = BrowserDbManager.getInstance();
+      const manager2 = BrowserDbManager.getInstance();
       expect(manager).toBe(manager2);
     });
   })

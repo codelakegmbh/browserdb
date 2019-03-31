@@ -1,10 +1,10 @@
-import { LocalDatabase } from ".";
+import { BrowserDb } from ".";
 
-export class LocalDatabaseCollection {
+export class BrowserDbCollection {
   private items: any[];
 
   constructor(
-    private database: LocalDatabase,
+    private database: BrowserDb,
     private name: string,
   ) {
     const initialData = window.localStorage.getItem(this.collectionKey());

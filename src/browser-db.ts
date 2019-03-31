@@ -1,7 +1,7 @@
-import { LocalDatabaseCollection } from ".";
+import { BrowserDbCollection } from ".";
 
-export class LocalDatabase {
-  private collections: LocalDatabaseCollection[] = [];
+export class BrowserDb {
+  private collections: BrowserDbCollection[] = [];
 
   constructor(private name: string) {
   }
@@ -15,7 +15,7 @@ export class LocalDatabase {
     if (existingInstance) {
       return existingInstance;
     }
-    const newInstance = new LocalDatabaseCollection(this, name);
+    const newInstance = new BrowserDbCollection(this, name);
     this.collections.push(newInstance);
     return newInstance;
   }
