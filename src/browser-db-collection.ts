@@ -46,7 +46,10 @@ export class BrowserDbCollection {
       if (!predicate(this.items[i])) {
         continue;
       }
-      this.items[i] = updater(this.items[i]);
+      const result = updater(this.items[i]);
+      if (result !== undefined) {
+        this.items[i] = result;
+      }
       updatedItems.push(this.items[i]);
     }
 
