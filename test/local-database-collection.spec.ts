@@ -69,7 +69,30 @@ describe('local-database-collection-tests', () => {
     });
   });
 
-  describe('insertItem(item: any)', () => {
-    
+  describe('selectItems<T = any>(predicate: (a: T) => boolean): T[]', () => {
+    let collection: LocalDatabaseCollection;
+
+    beforeEach(() => {
+      initializeLocalStorageMock();
+      collection = (new LocalDatabase('test')).getCollection('bla');
+    });
+
+    test('returns all inserted items', () => {
+      collection.insertItem(4);
+      collection.insertItem(6);
+      collection.insertItem(5);
+      
+      expect(collection.selectItems(() => true)).toEqual([4, 6, 5]);
+    });
+
+    test('returns only the eentries which fulfill the predicate', () => {
+      collection.insertItem(4);
+      collection.insertItem(6);
+      collection.insertItem(5);
+      collection.insertItem(17);
+      collection.insertItem(-4);
+      
+      expect(collection.selectItems(x => x % 2 === 0)).toEqual([4, 6, -4]);
+    });
   });
 });
