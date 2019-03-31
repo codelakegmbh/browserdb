@@ -14,15 +14,15 @@ function initializeLocalStorageMock() {
   return storage;
 }
 
+let collection: LocalDatabaseCollection;
+
+beforeEach(() => {
+  initializeLocalStorageMock();
+  collection = (new LocalDatabase('test')).getCollection('foo');
+  collection.clear();
+});
+
 describe('local-database-collection-tests', () => {
-  let collection: LocalDatabaseCollection;
-
-  beforeEach(() => {
-    initializeLocalStorageMock();
-    collection = (new LocalDatabase('test')).getCollection('foo');
-    collection.deleteItems(() => true);
-  });
-
   describe('getName()', () => {
     test('returns the passed name', () => {
       expect(collection.getName()).toBe('foo');
