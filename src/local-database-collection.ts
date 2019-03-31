@@ -47,4 +47,20 @@ export class LocalDatabaseCollection {
     this.persistCachedItems();
     return updatedItems;
   }
+
+  public deleteItems<T = any>(predicate: (a: T) => boolean): T[] {
+    const deletedItems: T[] = [];
+
+    for (let i = 0; i < this.items.length; ++i) {
+      if (!predicate(this.items[i])) {
+        continue;
+      }
+      deletedItems.push(this.items[i]);
+      this.items.splice(i, 1);
+    }
+
+    this.persistCachedItems();
+
+    return deletedItems;
+  }
 }
