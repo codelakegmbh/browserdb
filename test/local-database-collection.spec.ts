@@ -20,6 +20,7 @@ describe('local-database-collection-tests', () => {
   beforeEach(() => {
     initializeLocalStorageMock();
     collection = (new LocalDatabase('test')).getCollection('foo');
+    collection.deleteItems(() => true);
   });
 
   describe('getName()', () => {
