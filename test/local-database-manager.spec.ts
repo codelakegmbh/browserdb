@@ -32,4 +32,17 @@ describe('local-database-manager-tests', () => {
       expect(database).toBe(databaseThirdCall);
     });
   });
+
+  describe('getInstance()', () => {
+    test('provides a global manager instance', () => {
+      const manager = LocalDatabaseManager.getInstance();
+      expect(manager).toBeInstanceOf(LocalDatabaseManager);
+    });
+
+    test('returns the same instance', () => {
+      const manager = LocalDatabaseManager.getInstance();
+      const manager2 = LocalDatabaseManager.getInstance();
+      expect(manager).toBe(manager2);
+    });
+  })
 });
