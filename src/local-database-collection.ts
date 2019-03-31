@@ -7,7 +7,12 @@ export class LocalDatabaseCollection {
     private database: LocalDatabase,
     private name: string,
   ) {
-    this.items = JSON.parse(window.localStorage.getItem(this.collectionKey()) || '[]');
+    const initialData = window.localStorage.getItem(this.collectionKey());
+    if (initialData) {
+      this.items = JSON.parse(initialData);
+    } else {
+      this.items = [];
+    }
   }
 
   public getName() {
