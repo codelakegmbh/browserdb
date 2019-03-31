@@ -21,9 +21,13 @@ export class LocalDatabaseCollection {
     return `local-database[${this.database.getName()}][${this.name}]`;
   }
 
+  private persistCachedItems() {
+    window.localStorage.setItem(this.collectionKey(), JSON.stringify(this.items));
+  }
+
   public insertItem(item: any) {
     this.items.push(item);
-    window.localStorage.setItem(this.collectionKey(), JSON.stringify(this.items));
+    this.persistCachedItems();
   }
 
   public selectItems<T = any>(predicate: (a: T) => boolean): T[] {
@@ -39,8 +43,8 @@ export class LocalDatabaseCollection {
       this.items[i] = updater(this.items[i]);
       updatedItems.push(this.items[i]);
     }
-    
-    window.localStorage.setItem(this.collectionKey(), JSON.stringify(this.items));
+
+    this.persistCachedItems();
     return updatedItems;
   }
 }
