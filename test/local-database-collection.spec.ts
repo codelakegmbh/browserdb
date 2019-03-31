@@ -117,4 +117,25 @@ describe('local-database-collection-tests', () => {
       expect(window.localStorage.getItem(collection.collectionKey())).toBe('[8]')
     });
   });
+
+  describe('deleteItems<T = any>(predicate: (a: T) => boolean): T[]', () => {
+    test('removes the items that match the predicate', () => {
+      collection.insertItem(1);
+      collection.deleteItems(x => true);
+      expect(collection.selectItems(x => true).length).toBe(0);
+    });
+
+    test('returns the deleted items', () => {
+      collection.insertItem(1);
+      const deletedItems = collection.deleteItems(x => true);
+      expect(deletedItems).toEqual([1]);
+    });
+
+    test('updates localStorage string', () => {
+      collection.insertItem(1);
+      collection.insertItem(2);
+      collection.deleteItems(x => x % 2 !== 0);
+      expect(window.localStorage.getItem(collection.collectionKey())).toBe('[2]');
+    });
+  });
 });
