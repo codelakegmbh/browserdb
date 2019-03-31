@@ -15,9 +15,15 @@ function initializeLocalStorageMock() {
 }
 
 describe('local-database-collection-tests', () => {
+  let collection: LocalDatabaseCollection;
+
+  beforeEach(() => {
+    initializeLocalStorageMock();
+    collection = (new LocalDatabase('test')).getCollection('foo');
+  });
+
   describe('getName()', () => {
     test('returns the passed name', () => {
-      const collection = new LocalDatabaseCollection(null, 'foo');
       expect(collection.getName()).toBe('foo');
     });
   });
@@ -32,21 +38,11 @@ describe('local-database-collection-tests', () => {
 
   describe('collectionKey()', () => {
     test('returns the properly prefixed key', () => {
-      const db = new LocalDatabase('test');
-    const collection = db.getCollection('bar');
-
-    expect(collection.collectionKey()).toBe('local-database[test][bar]');
+      expect(collection.collectionKey()).toBe('local-database[test][foo]');
     });
   });
 
   describe('insertItem(item: any)', () => {
-    let collection: LocalDatabaseCollection;
-
-    beforeEach(() => {
-      initializeLocalStorageMock();
-      collection = (new LocalDatabase('test')).getCollection('bla');
-    });
-
     test('creates an array for the collection', () => {
       collection.insertItem(null);
       const localString = window.localStorage.getItem(collection.collectionKey());
@@ -70,13 +66,6 @@ describe('local-database-collection-tests', () => {
   });
 
   describe('selectItems<T = any>(predicate: (a: T) => boolean): T[]', () => {
-    let collection: LocalDatabaseCollection;
-
-    beforeEach(() => {
-      initializeLocalStorageMock();
-      collection = (new LocalDatabase('test')).getCollection('bla');
-    });
-
     test('returns all inserted items', () => {
       collection.insertItem(4);
       collection.insertItem(6);
