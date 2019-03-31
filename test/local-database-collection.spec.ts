@@ -60,5 +60,13 @@ describe('local-database-collection-tests', () => {
       const parsedArray = JSON.parse(localString);
       expect(parsedArray[0]).toBe(4);
     });
+
+    test('local collection keeps old item on new insertion', () => {
+      collection.insertItem(4);
+      collection.insertItem(6);
+      const localString = window.localStorage.getItem(collection.collectionKey());
+      const parsedArray = JSON.parse(localString);
+      expect(parsedArray[0]).toBe(4);
+    });
   });
 });
