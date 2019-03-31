@@ -92,7 +92,29 @@ describe('local-database-collection-tests', () => {
     });
   });
 
-  describe('updateItems<T = any>(predicate: (item: T) => boolean, (item: T) => void): T[]', () => {
-    
+  describe('updateItems<T = any>(predicate: (item: T) => boolean, updater: (item: T) => T): T[]', () => {
+    test('overwrites old items the fulfill the predicate with the new item returned by the updater', () => {
+      collection.insertItem(4);
+      collection.insertItem(5);
+      collection.insertItem(6);
+      collection.insertItem(7);
+      collection.updateItems(x => x % 2 !== 0, x => x * 2);
+      expect(collection.selectItems(() => true)).toEqual([4, 10, 6, 14]);
+    });
+
+    test('returns the modified items', () => {
+      collection.insertItem(4);
+      collection.insertItem(5);
+      collection.insertItem(6);
+      collection.insertItem(7);
+      const updated = collection.updateItems(x => x % 2 !== 0, x => x * 2);
+      expect(updated).toEqual([10, 14]);
+    });
+
+    test('updates the localStorage string', () => {
+      collection.insertItem(4);
+      collection.updateItems(x => true, x => x * 2);
+      expect(window.localStorage.getItem(collection.collectionKey())).toBe('[8]')
+    });
   });
 });
