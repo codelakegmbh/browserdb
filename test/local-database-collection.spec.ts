@@ -39,7 +39,7 @@ describe('local-database-collection-tests', () => {
     });
   });
 
-  describe('insertItem()', () => {
+  describe('insertItem(item: any)', () => {
     let storage: { [key: string]: string };
     let collection: LocalDatabaseCollection;
 
