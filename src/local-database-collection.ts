@@ -14,4 +14,8 @@ export class LocalDatabaseCollection {
   public getDatabase() {
     return this.database;
   }
+
+  public collectionKey() {
+    return `local-database[${this.database.getName()}][${this.name}]`;
+  }
 }
