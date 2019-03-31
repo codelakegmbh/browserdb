@@ -94,5 +94,12 @@ describe('local-database-collection-tests', () => {
       
       expect(collection.selectItems(x => x % 2 === 0)).toEqual([4, 6, -4]);
     });
+
+    test('returns the same object that was inserted - check that the collection data is cached', () => {
+      const obj = { };
+      collection.insertItem(obj);
+
+      expect(collection.selectItems(() => true)[0]).toBe(obj);
+    });
   });
 });
