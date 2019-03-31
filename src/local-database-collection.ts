@@ -64,4 +64,9 @@ export class LocalDatabaseCollection {
 
     return deletedItems;
   }
+
+  public clear() {
+    this.items = [];
+    this.persistCachedItems();
+  }
 }
