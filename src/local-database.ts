@@ -15,7 +15,7 @@ export class LocalDatabase {
     if (existingInstance) {
       return existingInstance;
     }
-    const newInstance = new LocalDatabaseCollection(name);
+    const newInstance = new LocalDatabaseCollection(this, name);
     this.collections.push(newInstance);
     return newInstance;
   }
