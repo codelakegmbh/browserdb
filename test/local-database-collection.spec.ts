@@ -102,4 +102,8 @@ describe('local-database-collection-tests', () => {
       expect(collection.selectItems(() => true)[0]).toBe(obj);
     });
   });
+
+  describe('updateItems<T = any>(predicate: (item: T) => boolean, (item: T) => void): T[]', () => {
+    
+  });
 });
