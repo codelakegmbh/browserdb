@@ -40,11 +40,10 @@ describe('local-database-collection-tests', () => {
   });
 
   describe('insertItem(item: any)', () => {
-    let storage: { [key: string]: string };
     let collection: LocalDatabaseCollection;
 
     beforeEach(() => {
-      storage = initializeLocalStorageMock();
+      initializeLocalStorageMock();
       collection = (new LocalDatabase('test')).getCollection('bla');
     });
 
@@ -68,5 +67,9 @@ describe('local-database-collection-tests', () => {
       const parsedArray = JSON.parse(localString);
       expect(parsedArray[0]).toBe(4);
     });
+  });
+
+  describe('insertItem(item: any)', () => {
+    
   });
 });
