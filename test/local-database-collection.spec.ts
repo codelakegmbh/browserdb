@@ -41,9 +41,24 @@ describe('local-database-collection-tests', () => {
 
   describe('insertItem()', () => {
     let storage: { [key: string]: string };
+    let collection: LocalDatabaseCollection;
 
     beforeEach(() => {
       storage = initializeLocalStorageMock();
+      collection = (new LocalDatabase('test')).getCollection('bla');
+    });
+
+    test('creates an array for the collection', () => {
+      collection.insertItem(null);
+      const localString = window.localStorage.getItem(collection.collectionKey());
+      expect(JSON.parse(localString)).toBeInstanceOf(Array);
+    });
+
+    test('local collection contains the inserted item', () => {
+      collection.insertItem(4);
+      const localString = window.localStorage.getItem(collection.collectionKey());
+      const parsedArray = JSON.parse(localString);
+      expect(parsedArray[0]).toBe(4);
     });
   });
 });
