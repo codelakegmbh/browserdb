@@ -1,15 +1,15 @@
 import {LocalDatabase} from './local-database';
 
 export class LocalDatabaseManager {
-  private static readonly instances: LocalDatabase[] = [];
+  private readonly instances: LocalDatabase[] = [];
 
-  static getDatabase(name: string) {
-    const existingInstance = LocalDatabaseManager.instances.filter(x => x.getName() === name)[0];
+  public getDatabase(name: string) {
+    const existingInstance = this.instances.filter(x => x.getName() === name)[0];
     if (existingInstance) {
       return existingInstance;
     }
     const newInstance = new LocalDatabase(name);
-    LocalDatabaseManager.instances.push(newInstance);
+    this.instances.push(newInstance);
     return newInstance;
   }
 }
