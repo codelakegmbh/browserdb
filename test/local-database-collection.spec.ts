@@ -13,14 +13,14 @@ function initializeLocalStorageMock() {
 }
 
 describe('local-database-collection-tests', () => {
-  describe('getName', () => {
+  describe('getName()', () => {
     test('returns the passed name', () => {
       const collection = new LocalDatabaseCollection(null, 'foo');
       expect(collection.getName()).toBe('foo');
     });
   });
 
-  describe('getDatabase', () => {
+  describe('getDatabase()', () => {
     test('returns the passed name', () => {
       const db = new LocalDatabase('moin');
       const collection = new LocalDatabaseCollection(db, 'foo');
@@ -28,7 +28,7 @@ describe('local-database-collection-tests', () => {
     });
   });
 
-  describe('insertItem', () => {
+  describe('insertItem()', () => {
     beforeEach(() => {
       initializeLocalStorageMock();
     });
