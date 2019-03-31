@@ -1,7 +1,7 @@
-import { BrowserDbCollection, BrowserDb } from "../src";
+import {BrowserDbCollection, BrowserDb} from '../src';
 
 function initializeLocalStorageMock() {
-  let storage: { [key: string]: string } = { };
+  let storage: { [key: string]: string } = {};
 
   spyOn(window.localStorage, 'setItem').and.callFake((key: string, value: string) => {
     storage[key] = value;
@@ -71,7 +71,7 @@ describe('local-database-collection-tests', () => {
       collection.insertItem(4);
       collection.insertItem(6);
       collection.insertItem(5);
-      
+
       expect(collection.selectItems(() => true)).toEqual([4, 6, 5]);
     });
 
@@ -81,12 +81,12 @@ describe('local-database-collection-tests', () => {
       collection.insertItem(5);
       collection.insertItem(17);
       collection.insertItem(-4);
-      
+
       expect(collection.selectItems(x => x % 2 === 0)).toEqual([4, 6, -4]);
     });
 
     test('returns the same object that was inserted - check that the collection data is cached', () => {
-      const obj = { };
+      const obj = {};
       collection.insertItem(obj);
 
       expect(collection.selectItems(() => true)[0]).toBe(obj);
@@ -115,7 +115,14 @@ describe('local-database-collection-tests', () => {
     test('updates the localStorage string', () => {
       collection.insertItem(4);
       collection.updateItems(() => true, x => x * 2);
-      expect(window.localStorage.getItem(collection.collectionKey())).toBe('[8]')
+      expect(window.localStorage.getItem(collection.collectionKey())).toBe('[8]');
+    });
+
+    test('applies reference update if undefined is returned', () => {
+      collection.insertItem({name: 'foo'});
+      collection.updateItems(() => true, x => { x.name = 'bar' });
+      const obj = collection.selectItems(() => true)[0];
+      expect(obj.name).toBe('bar');
     });
   });
 
@@ -153,6 +160,6 @@ describe('local-database-collection-tests', () => {
       collection.insertItem(1);
       const otherCollection = (new BrowserDb(collection.getDatabase().getName())).getCollection(collection.getName());
       expect(collection.selectItems(() => true)).toEqual(otherCollection.selectItems(() => true));
-    })
+    });
   });
 });
