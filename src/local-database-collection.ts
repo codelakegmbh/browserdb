@@ -25,4 +25,8 @@ export class LocalDatabaseCollection {
     this.items.push(item);
     window.localStorage.setItem(this.collectionKey(), JSON.stringify(this.items));
   }
+
+  public selectItems<T = any>(predicate: (a: T) => boolean): T[] {
+    return this.items.filter(predicate);
+  }
 }
