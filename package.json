@@ -1,6 +1,6 @@
 {
   "name": "@codelake/browserdb",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A wrapper around localStorage to enable document like local storing of objects in the browser.",
   "main": "dist/index.js",
   "scripts": {
