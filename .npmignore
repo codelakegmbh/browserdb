@@ -1,4 +1,5 @@
 test/**/*
-jest.config.js
-babel.config.js
-.idea
+.babelrc
+.gitignore
+.idea/
+.vscode/
