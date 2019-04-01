@@ -1,7 +1,7 @@
 import { BrowserDbCollection } from ".";
 
 export class BrowserDb {
-  private collections: BrowserDbCollection[] = [];
+  private __collections: BrowserDbCollection[] = [];
 
   constructor(private name: string) {
   }
@@ -11,12 +11,12 @@ export class BrowserDb {
   }
 
   public getCollection(name: string) {
-    const existingInstance = this.collections.filter(x => x.getName() === name)[0];
+    const existingInstance = this.__collections.filter(x => x.getName() === name)[0];
     if (existingInstance) {
       return existingInstance;
     }
     const newInstance = new BrowserDbCollection(this, name);
-    this.collections.push(newInstance);
+    this.__collections.push(newInstance);
     return newInstance;
   }
 }
