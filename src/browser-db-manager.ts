@@ -1,16 +1,16 @@
 import {BrowserDb} from './browser-db';
 
 export class BrowserDbManager {
-  private readonly instances: BrowserDb[] = [];
+  private readonly __instances: BrowserDb[] = [];
   private static singletonInstance: BrowserDbManager;
 
   public getDatabase(name: string) {
-    const existingInstance = this.instances.filter(x => x.getName() === name)[0];
+    const existingInstance = this.__instances.filter(x => x.getName() === name)[0];
     if (existingInstance) {
       return existingInstance;
     }
     const newInstance = new BrowserDb(name);
-    this.instances.push(newInstance);
+    this.__instances.push(newInstance);
     return newInstance;
   }
 
