@@ -1,7 +1,7 @@
 import { BrowserDb } from ".";
 
 export class BrowserDbCollection {
-  private items: any[];
+  private __items: any[];
 
   constructor(
     private database: BrowserDb,
@@ -9,9 +9,9 @@ export class BrowserDbCollection {
   ) {
     const initialData = window.localStorage.getItem(this.collectionKey());
     if (initialData) {
-      this.items = JSON.parse(initialData);
+      this.__items = JSON.parse(initialData);
     } else {
-      this.items = [];
+      this.__items = [];
     }
   }
 
@@ -28,29 +28,29 @@ export class BrowserDbCollection {
   }
 
   private persistCachedItems() {
-    window.localStorage.setItem(this.collectionKey(), JSON.stringify(this.items));
+    window.localStorage.setItem(this.collectionKey(), JSON.stringify(this.__items));
   }
 
   public insertItem(item: any) {
-    this.items.push(item);
+    this.__items.push(item);
     this.persistCachedItems();
   }
 
   public selectItems<T = any>(predicate: (a: T) => boolean): T[] {
-    return this.items.filter(predicate);
+    return this.__items.filter(predicate);
   }
 
   public updateItems<T = any>(predicate: (item: T) => boolean, updater: (item: T) => void): T[] {
     const updatedItems: T[] = [];
-    for (let i = 0; i < this.items.length; ++i) {
-      if (!predicate(this.items[i])) {
+    for (let i = 0; i < this.__items.length; ++i) {
+      if (!predicate(this.__items[i])) {
         continue;
       }
-      const result = updater(this.items[i]);
+      const result = updater(this.__items[i]);
       if (result !== undefined) {
-        this.items[i] = result;
+        this.__items[i] = result;
       }
-      updatedItems.push(this.items[i]);
+      updatedItems.push(this.__items[i]);
     }
 
     this.persistCachedItems();
@@ -60,12 +60,12 @@ export class BrowserDbCollection {
   public deleteItems<T = any>(predicate: (a: T) => boolean): T[] {
     const deletedItems: T[] = [];
 
-    for (let i = 0; i < this.items.length; ++i) {
-      if (!predicate(this.items[i])) {
+    for (let i = 0; i < this.__items.length; ++i) {
+      if (!predicate(this.__items[i])) {
         continue;
       }
-      deletedItems.push(this.items[i]);
-      this.items.splice(i, 1);
+      deletedItems.push(this.__items[i]);
+      this.__items.splice(i, 1);
     }
 
     this.persistCachedItems();
@@ -74,7 +74,7 @@ export class BrowserDbCollection {
   }
 
   public clear() {
-    this.items = [];
+    this.__items = [];
     this.persistCachedItems();
   }
 }
