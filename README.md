@@ -31,6 +31,11 @@ In this case you need an instance of `BrowserDb`.
 You can just create it manually, or use the `BrowserDbManager` in order to reduce memory usage and keep data in your app in sync.
 ```typescript
 import { BrowserDb, BrowserDbManager } from '@codelake/browserdb';
+// or via require and object destructuring
+const { BrowserDb, BrowserDbManager } = require('@codelake/browserdb');
+// or one by one via require
+const BrowserDb = require('@codelake/browserdb').BrowserDb;
+const BrowserDbManager = require('@codelake/browserdb').BrowserDbManager;
 
 const db = new BrowserDb('foo');
 
