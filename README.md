@@ -6,6 +6,9 @@ It should mainly be used in PWAs to store state.
 It should __NOT__ be used to store large amounts of data as it will not scale efficiently in regard to memory and speed!
 So be careful how you use it or how a user of your application could use it and possibly dump it with too much data.
 
+__NOTE:__ The master branch will contain work that is still work-in-progress.
+So if you want to download a stable version of the library source code please get it from the GitHub release page.
+
 ## Content
 
 * [Installation](#installation)
@@ -128,6 +131,6 @@ But if you want to perform operations on the deleted items, you should use the s
   * Every time you modify the collection via its CRUD methods (except for reading/selecting data) the collection will automatically be persisted as soon as the operation of the collection has finished
 * What happens if I modify a selected item without using the `updateItems` method?
   * Nothing - more or less
-    
+
     If you modify items (in the sense of objects) outside the regular updating mechanism it will be updated in the internal data storage/cache of the collection, but the change will not be persisted.
     So, if you want to make sure all your changed are persisted, use the regular updating mechanism.
