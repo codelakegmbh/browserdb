@@ -1,5 +1,5 @@
 import {BrowserDbManager} from '../src/browser-db-manager';
-import {BrowserDb} from '../src';
+import {BrowserDb} from '../src/browser-db';
 
 describe('local-database-manager-tests', () => {
   describe('getDatabase()', () => {
