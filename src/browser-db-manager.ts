@@ -2,7 +2,7 @@ import {BrowserDb} from './browser-db';
 
 export class BrowserDbManager {
   private readonly __instances: BrowserDb[] = [];
-  private static singletonInstance: BrowserDbManager;
+  private static __singletonInstance: BrowserDbManager;
 
   public getDatabase(name: string) {
     const existingInstance = this.__instances.filter(x => x.getName() === name)[0];
@@ -15,10 +15,9 @@ export class BrowserDbManager {
   }
 
   public static getInstance() {
-    if (!BrowserDbManager.singletonInstance) {
-      BrowserDbManager.singletonInstance = new BrowserDbManager();
+    if (!BrowserDbManager.__singletonInstance) {
+      BrowserDbManager.__singletonInstance = new BrowserDbManager();
     }
-    return BrowserDbManager.singletonInstance;
+    return BrowserDbManager.__singletonInstance;
   }
 }
-
