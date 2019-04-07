@@ -20,4 +20,11 @@ export class BrowserDbManager {
     }
     return BrowserDbManager.__singletonInstance;
   }
+
+  public clear() {
+    while (this.__instances.length) {
+      this.__instances[0].clear();
+      this.__instances.splice(0, 1);
+    }
+  }
 }
