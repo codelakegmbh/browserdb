@@ -19,4 +19,11 @@ export class BrowserDb {
     this.__collections.push(newInstance);
     return newInstance;
   }
+
+  public clear() {
+    while (this.__collections.length) {
+      this.__collections[0].clear();
+      this.__collections.splice(0, 1);
+    }
+  }
 }
