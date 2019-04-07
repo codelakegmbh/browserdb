@@ -44,5 +44,29 @@ describe('local-database-manager-tests', () => {
       const manager2 = BrowserDbManager.getInstance();
       expect(manager).toBe(manager2);
     });
-  })
+  });
+
+  describe('clear()', () => {
+    test('drops all references to cached instances', () => {
+      const db = BrowserDbManager.getInstance().getDatabase('bla');
+      BrowserDbManager.getInstance().clear();
+      const db2 = BrowserDbManager.getInstance().getDatabase('bla');
+      expect(db).not.toBe(db2);
+    });
+
+    test('invokes clears on all database instances', () => {
+      BrowserDbManager
+        .getInstance()
+        .getDatabase('bla')
+        .getCollection('bar')
+        .insertItem(1);
+      BrowserDbManager.getInstance().clear();
+      const result = BrowserDbManager
+        .getInstance()
+        .getDatabase('bla')
+        .getCollection('bar')
+        .selectItems(() => true);
+      expect(result.length).toBe(0);
+    });
+  });
 });
