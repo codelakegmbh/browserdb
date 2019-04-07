@@ -1,10 +1,8 @@
 import {BrowserDbCollection, BrowserDb} from '../src';
-import {initializeLocalStorageMock} from './utilities';
 
 let collection: BrowserDbCollection;
 
 beforeEach(() => {
-  initializeLocalStorageMock();
   collection = (new BrowserDb('test')).getCollection('foo');
   collection.clear();
 });
