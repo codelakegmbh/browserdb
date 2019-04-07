@@ -3,11 +3,11 @@ import { BrowserDbCollection } from ".";
 export class BrowserDb {
   private __collections: BrowserDbCollection[] = [];
 
-  constructor(private name: string) {
+  constructor(private __name: string) {
   }
 
   public getName() {
-    return this.name;
+    return this.__name;
   }
 
   public getCollection(name: string) {
