@@ -4,3 +4,4 @@ test/**/*
 .idea/
 .vscode/
 coverage/
+.github/
