@@ -16,6 +16,7 @@ So a brief list of this project's code style:
 * only one class or decorator per file
 * file names are written in lower case there words/abbreviation groups are divided by dashes `-`
 * test files end with `.spec.ts`
+* don't use default exports
 
 And that's basically all you have to know to start contributing.
 This file will also be regularly updated as new guidelines are found.
