@@ -37,5 +37,23 @@ describe('local-database-tests', () => {
       const collection: BrowserDbCollection = database.getCollection('bar');
       expect(collection.getName()).toBe('bar');
     });
-  })
+  });
+
+  describe('clear()', () => {
+    test('clears all underlying collections', () => {
+      const db = new BrowserDb('foo');
+      db.getCollection('bar').insertItem(1);
+      db.clear();
+      const result = db.getCollection('bar').selectItems(() => true);
+      expect(result.length).toBe(0);
+    });
+
+    test('drops all references', () => {
+      const db = new BrowserDb('foo');
+      const collection = db.getCollection('bar');
+      db.clear();
+      const collection2 = db.getCollection('bar');
+      expect(collection).not.toBe(collection2);
+    });
+  });
 });
