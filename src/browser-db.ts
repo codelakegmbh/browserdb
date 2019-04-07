@@ -1,4 +1,4 @@
-import { BrowserDbCollection, BrowserDbManager } from ".";
+import { BrowserDbCollection } from ".";
 
 export class BrowserDb {
   private __collections: BrowserDbCollection[] = [];
@@ -25,11 +25,5 @@ export class BrowserDb {
       this.__collections[0].clear();
       this.__collections.splice(0, 1);
     }
-  }
-}
-
-export function BrowserDbProp(databaseName: string) {
-  return function(target: any, propertyName: string) {
-    target[propertyName] = BrowserDbManager.getInstance().getDatabase(databaseName);
   }
 }
