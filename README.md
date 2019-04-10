@@ -12,9 +12,10 @@ So if you want to download a stable version of the library source code please ge
 ## Content
 
 * [Installation](#installation)
-* [Usage](#usage)
-  * [Retrieving a database](#retrieving-a-database)
-  * [Retrieving a collection](#retrieving-a-collection)
+* [Retrieving a database](#retrieving-a-database)
+* [Retrieving a collection](#retrieving-a-collection)
+* [Meta Programming](#meta-programming)
+* [Collection Usage](#collection-usage)
   * [Inserting data](#inserting-data)
   * [Selecting data](#selecting-data)
   * [Deleting data](#deleting-data)
@@ -25,12 +26,7 @@ So if you want to download a stable version of the library source code please ge
 ## Installation
 browserdb can be installed via `npm i @codelake/browserdb`
 
-## Usage
-browserdb aims work very much document like as a system like MongoDB does.
-So, the first thing you need before you can work on any data is a database.
-In this case you need an instance of `BrowserDb`.
-
-### Retrieving a database
+## Retrieving a database
 You can just create it manually, or use the `BrowserDbManager` in order to reduce memory usage and keep data in your app in sync.
 ```typescript
 import { BrowserDb, BrowserDbManager } from '@codelake/browserdb';
@@ -52,7 +48,7 @@ method will be kept in memory, so the exact instance can be shared across multip
 
 It is recommended to use the `BrowserDbManager` as the corresponding data from the actual `localStorage` is only read __ONCE__ at instantiation time and not synced afterwards!
 
-### Retrieving a collection
+## Retrieving a collection
 The database on its own does not do anything yet.
 In order to read or write data you have to get a `BrowserDbCollection`.
 You can easily do so by calling the `getCollection(name)` method with the name of the desired collection.
@@ -63,6 +59,41 @@ If the collection was never accessed before, it will be instantiated for you.
 During the instantiation the collection will read the data contained in the `localStorage` field where the key is the returned value of the collection's `collectionName()` method.
 
 After the first instantiation, the data inside `localStorage` won't be read again but only written to!
+
+## Meta Programming
+By now you've seen some ways to retrieve a `BrowserDbCollection` so you can persist your data.
+But it is pretty annoying to always fetch the fitting collection via the `BrowserDbManager` Singleton.
+So, if you are building your application with classes in TypeScript (or with babel and the decorators plugin)
+you can also use decorators to retrieve `BrowserDb` and `BrowserDbCollection` instances!
+
+To attach a `BrowserDb` instance to a class field just use the `BrowserDbProp` decorator:
+```typescript
+import {BrowserDb, BrowserDbProp} from '@codelake/browserdb';
+
+class SomeComponent {
+  @BrowserDbProp('foo')
+  private db: BrowserDb;
+}
+```
+In the above example, the decorator will insert a `BrowserDb` instance
+into the `db` property of a newly created `SomeComponent` instance.
+That instance is internally fetched via the `BrowserDbManager`.
+
+But in your case you may need the whole database but only one of its collections.
+The steps necessary to do so are very similar to the ones to bind a database:
+```typescript
+import {BrowserDbCollection, BrowserDbCollectionProp} from '@codelake/browserdb';
+
+class SomeComponent {
+  @BrowserDbCollectionProp('foo', 'bar')
+  private collection: BrowserDbCollection;
+}
+```
+
+## Collection Usage
+browserdb aims work very much document like as a system like MongoDB does.
+So, the first thing you need before you can work on any data is a database.
+In this case you need an instance of `BrowserDb`.
 
 ### Inserting data
 You can insert any data you want into a collection like to following code shows:
