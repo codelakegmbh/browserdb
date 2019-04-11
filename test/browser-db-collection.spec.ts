@@ -159,4 +159,37 @@ describe('local-database-collection-tests', () => {
       expect(collection.selectItems(() => true)).toEqual(otherCollection.selectItems(() => true));
     });
   });
+
+  describe('getAllItems()', () => {
+    test('returns an array', () => {
+      expect(collection.getAllItems()).toBeInstanceOf(Array);
+    });
+
+    test('does not return a reference to the underlying collection', () => {
+      expect(collection.getAllItems()).not.toBe((collection as any).__items);
+    });
+
+    test('result contains all collection items', () => {
+      collection.insertItem(2);
+      collection.insertItem(89);
+      expect(collection.getAllItems()).toEqual([2, 89]);
+    });
+
+    test('returns the same collection on multiple calls', () => {
+      const items = collection.getAllItems();
+      const items2 = collection.getAllItems();
+      expect(items).toBe(items2);
+    });
+
+    test('returns different collections after mutation of the main collection', () => {
+      const items = collection.getAllItems();
+      collection.insertItem(3);
+      const items2 = collection.getAllItems();
+      expect(items).not.toBe(items2);
+    });
+
+    test('result is immutable', () => {
+      expect(() => (collection.getAllItems() as any).push(2)).toThrow();
+    });
+  });
 });
