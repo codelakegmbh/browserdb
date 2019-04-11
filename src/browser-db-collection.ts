@@ -2,6 +2,12 @@ import { BrowserDb } from ".";
 
 export class BrowserDbCollection {
   private __items: any[];
+  private __listeners: {
+    insert: ((item: any, col: BrowserDbCollection) => void)[],
+    [key: string]: Function[]
+  } = {
+    insert: []
+  };
 
   constructor(
     private database: BrowserDb,
@@ -33,6 +39,7 @@ export class BrowserDbCollection {
 
   public insertItem(item: any) {
     this.__items.push(item);
+    this.__notifyListeners('insert', item, this);
     this.persistCachedItems();
   }
 
@@ -76,5 +83,17 @@ export class BrowserDbCollection {
   public clear() {
     this.__items = [];
     this.persistCachedItems();
+  }
+
+  private __notifyListeners(event: 'insert', item: any, collection: BrowserDbCollection): void;
+  private __notifyListeners(event: string, ...params: any[]) {
+    for (const listener of this.__listeners[event]) {
+      listener(...params);
+    }
+  }
+
+  public on(event: 'insert', cb: <T = any>(item: T, col: BrowserDbCollection) => void): void;
+  public on(event: string, cb: Function) {
+    this.__listeners[event].push(cb);
   }
 }
