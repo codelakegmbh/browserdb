@@ -89,6 +89,8 @@ class SomeComponent {
   private collection: BrowserDbCollection;
 }
 ```
+In this example the first parameter of `BrowserDbCollectionProp` corresponds
+to the database name and the second parameter corresponds to the collection name.
 
 ## Collection Usage
 browserdb aims work very much document like as a system like MongoDB does.
