@@ -33,14 +33,14 @@ export class BrowserDbCollection {
     return `local-database[${this.database.getName()}][${this.name}]`;
   }
 
-  private persistCachedItems() {
+  private __persistCachedItems() {
     window.localStorage.setItem(this.collectionKey(), JSON.stringify(this.__items));
   }
 
   public insertItem(item: any) {
     this.__items.push(item);
     this.__notifyListeners('insert', item, this);
-    this.persistCachedItems();
+    this.__persistCachedItems();
   }
 
   public selectItems<T = any>(predicate: (a: T) => boolean): T[] {
@@ -60,7 +60,7 @@ export class BrowserDbCollection {
       updatedItems.push(this.__items[i]);
     }
 
-    this.persistCachedItems();
+    this.__persistCachedItems();
     return updatedItems;
   }
 
@@ -75,14 +75,14 @@ export class BrowserDbCollection {
       this.__items.splice(i, 1);
     }
 
-    this.persistCachedItems();
+    this.__persistCachedItems();
 
     return deletedItems;
   }
 
   public clear() {
     this.__items = [];
-    this.persistCachedItems();
+    this.__persistCachedItems();
   }
 
   private __notifyListeners(event: 'insert', item: any, collection: BrowserDbCollection): void;
