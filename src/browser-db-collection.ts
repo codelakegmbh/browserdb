@@ -2,6 +2,7 @@ import { BrowserDb } from ".";
 
 export class BrowserDbCollection {
   private __items: any[];
+  private __readonlyItems: ReadonlyArray<any>;
   private __listeners: {
     insert: ((item: any, col: BrowserDbCollection) => void)[],
     [key: string]: Function[]
@@ -19,6 +20,7 @@ export class BrowserDbCollection {
     } else {
       this.__items = [];
     }
+    this.__readonlyItems = Object.freeze(this.__items.slice());
   }
 
   public getName() {
@@ -34,6 +36,7 @@ export class BrowserDbCollection {
   }
 
   private __persistCachedItems() {
+    this.__readonlyItems = Object.freeze(this.__items.slice());
     window.localStorage.setItem(this.collectionKey(), JSON.stringify(this.__items));
   }
 
@@ -95,5 +98,9 @@ export class BrowserDbCollection {
   public on<T = any>(event: 'insert', cb: (item: T, col: BrowserDbCollection) => void): void;
   public on(event: string, cb: Function) {
     this.__listeners[event].push(cb);
+  }
+
+  public getAllItems() {
+    return this.__readonlyItems;
   }
 }
