@@ -101,13 +101,14 @@ export class BrowserDbCollection {
     }
   }
 
-  public on<T = any>(event: 'insert', cb: (item: T, col: BrowserDbCollection) => void): void;
-  public on<T = any>(event: 'update', cb: (items: T[], col: BrowserDbCollection) => void): void;
-  public on(event: string, cb: Function) {
+  public on<T = any>(event: 'insert', cb: (item: T, col: BrowserDbCollection) => void): boolean;
+  public on<T = any>(event: 'update', cb: (items: T[], col: BrowserDbCollection) => void): boolean;
+  public on(event: string, cb: Function): boolean {
     if (this.__listeners[event] === undefined) {
-      return;
+      return false;
     }
     this.__listeners[event].push(cb);
+    return true;
   }
 
   public getAllItems() {
