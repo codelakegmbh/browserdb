@@ -6,7 +6,7 @@ It should mainly be used in PWAs to store state.
 It should __NOT__ be used to store large amounts of data as it will not scale efficiently in regard to memory and speed!
 So be careful how you use it or how a user of your application could use it and possibly dump it with too much data.
 
-__NOTE:__ The master branch will contain work that is still work-in-progress.
+__Note:__ The master branch will contain work that is still work-in-progress.
 So if you want to download a stable version of the library source code please get it from the GitHub release page.
 
 ## Content
@@ -21,6 +21,11 @@ So if you want to download a stable version of the library source code please ge
   * [Deleting data](#deleting-data)
   * [Updating data](#updating-data)
   * [Clearing a collection](#clearing-a-collection)
+* [Events](#events)
+  * [insert event](#insert-event)
+  * [update event](#update-event)
+  * [delete event](#delete-event)
+  * [clear event](#clear-event)
 * [Some Q&A](#some-qa)
 
 ## Installation
@@ -155,8 +160,66 @@ collection.clear();
 // or
 collection.deleteItems(() => true);
 ```
-If your only goal is to clear the collection, the `clear()` method is recommended, as it uses less storage.
+If your only goal is to clear the collection, the `clear()` method is recommended, as it uses less memory.
 But if you want to perform operations on the deleted items, you should use the second method, since it returns all the deleted items.
+__Note:__ Be careful which way of collection clearing you use if your application makes use of events
+as the `clear` and `deleteItems` methods trigger different events!
+
+## Events
+It might also be the case that you are interested in the changes that happen to the data of a `BrowserDbCollection`.
+Hooking into such events is fairly easy.
+To do so, you just have to add a listener (callback) to the event you are interested in.
+
+### insert event
+This event is triggered after an item has been inserted into the collection.
+The callback will receive the inserted item and the collection in which the item has been inserted.
+
+```typescript
+collection.on('insert', (item: any, col: BrowserDbCollection) => {
+  // do stuff
+});
+```
+
+### update event
+This event is triggered after items in the collection have been updated.
+The callback will receive the array of updated items and the collection in which the items have been updated.
+
+__Note:__ This event is only triggered if an update took place -
+so, if an item in the collection matched the predicate.
+
+```typescript
+collection.on('update', (items: any[], col: BrowserDbCollection) => {
+  // do stuff
+});
+```
+
+### delete event
+This event is triggered after items in the collection have been deleted.
+The callback will receive the array of deleted items and the collection from which the items have been deleted.
+
+__Note:__ This event is only triggered if a deletion took place -
+so, if an item in the collection matched the predicate.
+
+```typescript
+collection.on('delete', (items: any[], col: BrowserDbCollection) => {
+  // do stuff
+});
+```
+
+### clear event
+This event is triggered after The collection has been cleared.
+The callback will receive the collection which has been cleared.
+
+__Note:__ This event will only be triggered if the `clear` method has been called.
+If you delete all the items of a collection via a call of the `deleteItems` method
+with a predicate which matches all items, it will trigger the `delete` event instead
+of the `clear` event.
+
+```typescript
+collection.on('clear', (col: BrowserDbCollection) => {
+  // do stuff
+});
+```
 
 ## Some Q&A
 
