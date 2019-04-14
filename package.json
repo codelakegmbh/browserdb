@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codelakegmbh/local-database.git"
+    "url": "git+https://github.com/codelakegmbh/browserdb.git"
   },
   "keywords": [
     "localstorage",
@@ -19,9 +19,9 @@
   "author": "Jörn Neumeyer",
   "license": "LGPL-3.0",
   "bugs": {
-    "url": "https://github.com/codelakegmbh/local-database/issues"
+    "url": "https://github.com/codelakegmbh/browserdb/issues"
   },
-  "homepage": "https://github.com/codelakegmbh/local-database#readme",
+  "homepage": "https://github.com/codelakegmbh/browserdb#readme",
   "devDependencies": {
     "@types/jest": "^24.0.11",
     "jest": "^24.5.0",
