@@ -7,6 +7,7 @@ describe('browser-db-collection-event-tests', () => {
     const db = new BrowserDb('foo');
     db.clear();
     collection = db.getCollection('bar');
+    collection.clear();
   });
 
   describe('on', () => {
