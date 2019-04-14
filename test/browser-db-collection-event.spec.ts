@@ -17,6 +17,8 @@ describe('browser-db-collection-event-tests', () => {
 
     test('returns true if listener adding is successful', () => {
       expect(collection.on('insert', () => { })).toBe(true);
+      expect(collection.on('update', () => { })).toBe(true);
+      expect(collection.on('delete', () => { })).toBe(true);
     });
 
     test('returns false if listener adding is fails', () => {
@@ -99,6 +101,52 @@ describe('browser-db-collection-event-tests', () => {
       collection.insertItem(1);
       collection.on('update', cb);
       collection.updateItems(() => true, () => 2);
+    });
+  });
+
+  describe('deletion', () => {
+    test('triggers on event async', (done) => {
+      let works = false;
+      const cb = () => {
+        works = true;
+        expect(works).toBeTruthy();
+        done();
+      };
+      collection.insertItem(1);
+      collection.on('delete', cb);
+      collection.deleteItems(() => true);
+      expect(works).toBe(false);
+    });
+
+    test('does not trigger if no items were deleted', (done) => {
+      let works = true;
+      const cb = () => works = false;
+      collection.on('delete', cb);
+      collection.deleteItems(() => true);
+      setTimeout(() => {
+        expect(works).toBe(true);
+        done();
+      });
+    });
+
+    test('passes the deleted items to the callback', (done) => {
+      const cb = (numbers: number[]) => {
+        expect(numbers).toEqual([1]);
+        done();
+      };
+      collection.insertItem(1);
+      collection.on('delete', cb);
+      collection.deleteItems(() => true);
+    });
+
+    test('passes the collection to the callback', (done) => {
+      const cb = (_: number[], col: BrowserDbCollection) => {
+        expect(col).toBe(collection);
+        done();
+      };
+      collection.insertItem(1);
+      collection.on('delete', cb);
+      collection.deleteItems(() => true);
     });
   });
 });
