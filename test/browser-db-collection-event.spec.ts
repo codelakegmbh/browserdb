@@ -14,6 +14,14 @@ describe('browser-db-collection-event-tests', () => {
     test('does not fail on invalid event', () => {
       expect(() => collection.on('dfghedt' as any, () => { })).not.toThrow();
     });
+
+    test('returns true if listener adding is successful', () => {
+      expect(collection.on('insert', () => { })).toBe(true);
+    });
+
+    test('returns false if listener adding is fails', () => {
+      expect(collection.on('sdfhgt' as any, () => { })).toBe(false);
+    });
   });
 
   describe('insertion', () => {
@@ -71,7 +79,7 @@ describe('browser-db-collection-event-tests', () => {
       setTimeout(() => {
         expect(works).toBeTruthy();
         done();
-      }, 20);
+      });
     });
 
     test('passes the updated items to the callback', (done) => {
