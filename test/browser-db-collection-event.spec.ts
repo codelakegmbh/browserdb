@@ -47,8 +47,7 @@ describe('browser-db-collection-event-tests', () => {
     });
 
     test('passes the collection to the callback', (done) => {
-      let works = false;
-      const cb = (a: number, col: BrowserDbCollection) => {
+      const cb = (_: number, col: BrowserDbCollection) => {
         expect(col).toBe(collection);
         done();
       };
@@ -93,7 +92,7 @@ describe('browser-db-collection-event-tests', () => {
     });
 
     test('passes the collection to the callback', (done) => {
-      const cb = (a: number[], col: BrowserDbCollection) => {
+      const cb = (_: number[], col: BrowserDbCollection) => {
         expect(col).toBe(collection);
         done();
       };
