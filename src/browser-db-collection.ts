@@ -122,6 +122,18 @@ export class BrowserDbCollection {
     return true;
   }
 
+  public removeListener(event: string, cb: Function) {
+    if (this.__listeners[event] === undefined) {
+      return;
+    }
+    const cbIndex = this.__listeners[event].indexOf(cb);
+    if (cbIndex === -1) {
+      return;
+    }
+
+    this.__listeners[event].splice(cbIndex, 1);
+  }
+
   public getAllItems() {
     return this.__readonlyItems;
   }
