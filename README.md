@@ -162,8 +162,10 @@ collection.deleteItems(() => true);
 ```
 If your only goal is to clear the collection, the `clear()` method is recommended, as it uses less memory.
 But if you want to perform operations on the deleted items, you should use the second method, since it returns all the deleted items.
+
 __Note:__ Be careful which way of collection clearing you use if your application makes use of events
 as the `clear` and `deleteItems` methods trigger different events!
+See [delete event](#delete-event).
 
 ## Events
 It might also be the case that you are interested in the changes that happen to the data of a `BrowserDbCollection`.
