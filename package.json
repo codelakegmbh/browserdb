@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watchAll --coverage",
-    "prepublish": "tsc"
+    "prepublish": "rm -r dist && tsc"
   },
   "repository": {
     "type": "git",
