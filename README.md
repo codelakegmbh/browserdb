@@ -236,7 +236,7 @@ const cb = (_, col) => {
 
 collection.on('insert', cb);
 
-collection.removeListener('insert, cb');
+collection.removeListener('insert', cb);
 ```
 
 ## Some Q&A
