@@ -163,4 +163,13 @@ describe('browser-db-collection-event-tests', () => {
       expect(works).toBe(false);
     });
   });
+
+  describe('removeListener', () => {
+    test('listener is not invoked after it has been removed', () => {
+      const cb = () => fail('listener has been called');
+      collection.on('insert', cb);
+      collection.removeListener(cb);
+      collection.insertItem(1);
+    });
+  });
 });
