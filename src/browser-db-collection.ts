@@ -5,6 +5,7 @@ export class BrowserDbCollection {
   private __readonlyItems: ReadonlyArray<any>;
   private __listeners: {
     insert: ((item: any, col: BrowserDbCollection) => void)[],
+    clear: ((col: BrowserDbCollection) => void)[],
     update: ((item: any[], col: BrowserDbCollection) => void)[],
     delete: ((item: any[], col: BrowserDbCollection) => void)[],
     [key: string]: Function[]
@@ -12,6 +13,7 @@ export class BrowserDbCollection {
     insert: [],
     update: [],
     delete: [],
+    clear: [],
   };
 
   constructor(
@@ -94,9 +96,11 @@ export class BrowserDbCollection {
 
   public clear() {
     this.__items = [];
+    this.__notifyListeners('clear', this);
     this.__persistCachedItems();
   }
 
+  private __notifyListeners(event: 'clear', collection: BrowserDbCollection): void;
   private __notifyListeners(event: 'insert', item: any, collection: BrowserDbCollection): void;
   private __notifyListeners(event: 'update', item: any[], collection: BrowserDbCollection): void;
   private __notifyListeners(event: 'delete', item: any[], collection: BrowserDbCollection): void;
@@ -106,6 +110,7 @@ export class BrowserDbCollection {
     }
   }
 
+  public on<T = any>(event: 'clear', cb: (col: BrowserDbCollection) => void): boolean;
   public on<T = any>(event: 'insert', cb: (item: T, col: BrowserDbCollection) => void): boolean;
   public on<T = any>(event: 'update', cb: (items: T[], col: BrowserDbCollection) => void): boolean;
   public on<T = any>(event: 'delete', cb: (items: T[], col: BrowserDbCollection) => void): boolean;
