@@ -5,9 +5,11 @@ export class BrowserDbCollection {
   private __readonlyItems: ReadonlyArray<any>;
   private __listeners: {
     insert: ((item: any, col: BrowserDbCollection) => void)[],
+    update: ((item: any[], col: BrowserDbCollection) => void)[],
     [key: string]: Function[]
   } = {
-    insert: []
+    insert: [],
+    update: [],
   };
 
   constructor(
@@ -64,6 +66,9 @@ export class BrowserDbCollection {
     }
 
     this.__persistCachedItems();
+    if (updatedItems.length) {
+      this.__notifyListeners('update', updatedItems, this);
+    }
     return updatedItems;
   }
 
@@ -89,6 +94,7 @@ export class BrowserDbCollection {
   }
 
   private __notifyListeners(event: 'insert', item: any, collection: BrowserDbCollection): void;
+  private __notifyListeners(event: 'update', item: any[], collection: BrowserDbCollection): void;
   private __notifyListeners(event: string, ...params: any[]) {
     for (const listener of this.__listeners[event]) {
       listener(...params);
