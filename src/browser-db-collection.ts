@@ -124,14 +124,15 @@ export class BrowserDbCollection {
 
   public removeListener(event: string, cb: Function) {
     if (this.__listeners[event] === undefined) {
-      return;
+      return false;
     }
     const cbIndex = this.__listeners[event].indexOf(cb);
     if (cbIndex === -1) {
-      return;
+      return false;
     }
 
     this.__listeners[event].splice(cbIndex, 1);
+    return true;
   }
 
   public getAllItems() {
