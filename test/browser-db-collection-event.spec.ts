@@ -149,4 +149,18 @@ describe('browser-db-collection-event-tests', () => {
       collection.deleteItems(() => true);
     });
   });
+
+  describe('clear', () => {
+    test('triggers on event async', (done) => {
+      let works = false;
+      const cb = () => {
+        works = true;
+        expect(works).toBe(true);
+        done();
+      };
+      collection.on('clear', cb);
+      collection.clear();
+      expect(works).toBe(false);
+    });
+  });
 });
