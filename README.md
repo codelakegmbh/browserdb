@@ -165,7 +165,7 @@ But if you want to perform operations on the deleted items, you should use the s
 
 __Note:__ Be careful which way of collection clearing you use if your application makes use of events
 as the `clear` and `deleteItems` methods trigger different events!
-See [delete event](#delete-event).
+See [clear event](#clear-event).
 
 ## Events
 It might also be the case that you are interested in the changes that happen to the data of a `BrowserDbCollection`.
