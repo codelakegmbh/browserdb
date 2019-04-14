@@ -171,5 +171,25 @@ describe('browser-db-collection-event-tests', () => {
       collection.removeListener('insert', cb);
       collection.insertItem(1);
     });
+
+    test('returns false if the given event does not exist', () => {
+      const cb = () => { };
+      const removed = collection.removeListener('sdfhgdf', cb);
+      expect(removed).toBe(false);
+    });
+
+    test('returns false if the given callbackis not set for the specified event', () => {
+      const cb = () => { };
+      collection.on('insert', cb);
+      const removed = collection.removeListener('update', cb);
+      expect(removed).toBe(false);
+    });
+
+    test('returns true on successful listener removal', () => {
+      const cb = () => { };
+      collection.on('insert', cb);
+      const removed = collection.removeListener('insert', cb);
+      expect(removed).toBe(true);
+    });
   });
 });
