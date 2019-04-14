@@ -26,6 +26,7 @@ So if you want to download a stable version of the library source code please ge
   * [update event](#update-event)
   * [delete event](#delete-event)
   * [clear event](#clear-event)
+  * [remove listeners](#remove-listeners)
 * [Some Q&A](#some-qa)
 
 ## Installation
@@ -223,8 +224,22 @@ collection.on('clear', (col: BrowserDbCollection) => {
 });
 ```
 
-## Some Q&A
+### remove listeners
+It may also come in handy to remove listeners as soon as you are not interested in listening to a collection.
+To remove a listener, you must provide the event it is listening to as well as the callback itself.
 
+```typescript
+
+const cb = (_, col) => {
+  console.log("Something happened in [%s]", col.getName());
+};
+
+collection.on('insert', cb);
+
+collection.removeListener('insert, cb');
+```
+
+## Some Q&A
 * When does the data of a collection get persisted?
   * Every time you modify the collection via its CRUD methods (except for reading/selecting data) the collection will automatically be persisted as soon as the operation of the collection has finished
 * What happens if I modify a selected item without using the `updateItems` method?
