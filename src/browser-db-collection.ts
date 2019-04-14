@@ -6,10 +6,12 @@ export class BrowserDbCollection {
   private __listeners: {
     insert: ((item: any, col: BrowserDbCollection) => void)[],
     update: ((item: any[], col: BrowserDbCollection) => void)[],
+    delete: ((item: any[], col: BrowserDbCollection) => void)[],
     [key: string]: Function[]
   } = {
     insert: [],
     update: [],
+    delete: [],
   };
 
   constructor(
@@ -84,7 +86,9 @@ export class BrowserDbCollection {
     }
 
     this.__persistCachedItems();
-
+    if (deletedItems.length) {
+      this.__notifyListeners('delete', deletedItems, this);
+    }
     return deletedItems;
   }
 
@@ -95,6 +99,7 @@ export class BrowserDbCollection {
 
   private __notifyListeners(event: 'insert', item: any, collection: BrowserDbCollection): void;
   private __notifyListeners(event: 'update', item: any[], collection: BrowserDbCollection): void;
+  private __notifyListeners(event: 'delete', item: any[], collection: BrowserDbCollection): void;
   private __notifyListeners(event: string, ...params: any[]) {
     for (const listener of this.__listeners[event]) {
       setTimeout(() => listener(...params));
@@ -103,6 +108,7 @@ export class BrowserDbCollection {
 
   public on<T = any>(event: 'insert', cb: (item: T, col: BrowserDbCollection) => void): boolean;
   public on<T = any>(event: 'update', cb: (items: T[], col: BrowserDbCollection) => void): boolean;
+  public on<T = any>(event: 'delete', cb: (items: T[], col: BrowserDbCollection) => void): boolean;
   public on(event: string, cb: Function): boolean {
     if (this.__listeners[event] === undefined) {
       return false;
