@@ -11,8 +11,8 @@ export class BrowserDbCollection {
   };
 
   constructor(
-    private database: BrowserDb,
-    private name: string,
+    private __database: BrowserDb,
+    private __name: string,
   ) {
     const initialData = window.localStorage.getItem(this.collectionKey());
     if (initialData) {
@@ -24,15 +24,15 @@ export class BrowserDbCollection {
   }
 
   public getName() {
-    return this.name;
+    return this.__name;
   }
 
   public getDatabase() {
-    return this.database;
+    return this.__database;
   }
 
   public collectionKey() {
-    return `local-database[${this.database.getName()}][${this.name}]`;
+    return `local-database[${this.__database.getName()}][${this.__name}]`;
   }
 
   private __persistCachedItems() {
