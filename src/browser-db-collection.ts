@@ -97,7 +97,7 @@ export class BrowserDbCollection {
   private __notifyListeners(event: 'update', item: any[], collection: BrowserDbCollection): void;
   private __notifyListeners(event: string, ...params: any[]) {
     for (const listener of this.__listeners[event]) {
-      listener(...params);
+      setTimeout(() => listener(...params));
     }
   }
 
