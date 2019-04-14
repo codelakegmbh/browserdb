@@ -168,7 +168,7 @@ describe('browser-db-collection-event-tests', () => {
     test('listener is not invoked after it has been removed', () => {
       const cb = () => fail('listener has been called');
       collection.on('insert', cb);
-      collection.removeListener(cb);
+      collection.removeListener('insert', cb);
       collection.insertItem(1);
     });
   });
