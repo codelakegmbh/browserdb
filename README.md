@@ -123,6 +123,9 @@ console.log(foo.name); // will print foo
 ```
 The `selectItems(predicate)` method will always return an array of items which match the predicate.
 
+__Note:__ `BrowserDbCollection` also provides a method `getAllItems` which returns an immutable
+
+
 ### Deleting data
 Deleting data required a predicate just as the selection of data does.
 ```typescript
